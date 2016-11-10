@@ -148,7 +148,6 @@ class BaseS3Connection(ConnectionUserAndKey):
                 values_to_sign.append(value)
 
         string_to_sign = '\n'.join(values_to_sign)
-        boom
         b64_hmac = base64.b64encode(
             hmac.new(b(secret_key), b(string_to_sign), digestmod=sha1).digest()
         )
