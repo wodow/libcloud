@@ -19,7 +19,6 @@ import time
 import sys
 
 from hashlib import sha1
-from collections import OrderedDict
 
 try:
     from lxml.etree import Element, SubElement
@@ -524,7 +523,7 @@ class BaseS3StorageDriver(StorageDriver):
         bytes_transferred = 0
         count = 1
         chunks = []
-        params = OrderedDict(uploadId=upload_id)
+        params = {'uploadId': upload_id}
 
         # Read the input data in chunk sizes suitable for AWS
         for data in read_in_chunks(iterator, chunk_size=CHUNK_SIZE,
@@ -588,7 +587,7 @@ class BaseS3StorageDriver(StorageDriver):
 
         data = tostring(root)
 
-        params = OrderedDict(uploadId=upload_id)
+        params = {'uploadId': upload_id}
         request_path = '?'.join((object_path, urlencode(params)))
         response = self.connection.request(request_path, data=data,
                                            method='POST')
@@ -617,7 +616,7 @@ class BaseS3StorageDriver(StorageDriver):
         :type upload_id: ``str``
         """
 
-        params = OrderedDict(uploadId=upload_id)
+        params = {'uploadId': upload_id}
         request_path = '?'.join((object_path, urlencode(params)))
         resp = self.connection.request(request_path, method='DELETE')
 
