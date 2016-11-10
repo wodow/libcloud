@@ -542,7 +542,7 @@ class BaseS3StorageDriver(StorageDriver):
             headers = {'Content-MD5': chunk_hash}
             params['partNumber'] = count
 
-            request_path = '?'.join((object_path, urlencode(params)))
+            request_path = '?'.join((object_path, urlencode(sorted(params.items()))))
 
             resp = self.connection.request(request_path, method='PUT',
                                            data=data, headers=headers)
@@ -588,7 +588,7 @@ class BaseS3StorageDriver(StorageDriver):
         data = tostring(root)
 
         params = {'uploadId': upload_id}
-        request_path = '?'.join((object_path, urlencode(params)))
+        request_path = '?'.join((object_path, urlencode(sorted(params.items()))))
         response = self.connection.request(request_path, data=data,
                                            method='POST')
 
@@ -617,7 +617,7 @@ class BaseS3StorageDriver(StorageDriver):
         """
 
         params = {'uploadId': upload_id}
-        request_path = '?'.join((object_path, urlencode(params)))
+        request_path = '?'.join((object_path, urlencode(sorted(params.items()))))
         resp = self.connection.request(request_path, method='DELETE')
 
         if resp.status != httplib.NO_CONTENT:
